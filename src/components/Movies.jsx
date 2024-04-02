@@ -4,14 +4,8 @@ import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 import axios from "axios";
 import Pagination from "./Pagination";
-import PropTypes from "prop-types";
 
-const Movies = ({
-  addToWatchlist,
-  removeFromWatchlist,
-  watchlist,
-  setWatchlist,
-}) => {
+const Movies = () => {
   const [moviesList, setMoviesList] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
@@ -51,10 +45,6 @@ const Movies = ({
               name={movie.original_title}
               id={movie.id}
               key={movie.id}
-              addToWatchlist={addToWatchlist}
-              removeFromWatchlist={removeFromWatchlist}
-              watchlist={watchlist}
-              setWatchlist={setWatchlist}
             />
           );
         })}
@@ -68,10 +58,4 @@ const Movies = ({
   );
 };
 
-Movies.propTypes = {
-  addToWatchlist: PropTypes.func.isRequired,
-  removeFromWatchlist: PropTypes.func.isRequired,
-  watchlist: PropTypes.array.isRequired,
-  setWatchlist: PropTypes.func.isRequired,
-};
 export default Movies;

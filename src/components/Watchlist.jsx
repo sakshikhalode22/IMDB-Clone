@@ -1,9 +1,11 @@
 // import React from 'react'
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
-const Watchlist = ({ watchlist, setWatchlist, removeFromWatchlist }) => {
+import { useEffect, useState, useContext } from "react";
+import axios from "axios";
+import { MovieContext } from "./MovieContext";
+const Watchlist = () => {
+  const { watchlist, setWatchlist, removeFromWatchlist } =
+    useContext(MovieContext);
   const [search, setSearch] = useState("");
   const [allGenreIds, setAllGenreIds] = useState([]);
   const [genreList, setGenreList] = useState(["All Genre"]);
@@ -155,12 +157,6 @@ const Watchlist = ({ watchlist, setWatchlist, removeFromWatchlist }) => {
       )}
     </>
   );
-};
-
-Watchlist.propTypes = {
-  watchlist: PropTypes.array.isRequired,
-  setWatchlist: PropTypes.func.isRequired,
-  removeFromWatchlist: PropTypes.func.isRequired,
 };
 
 export default Watchlist;

@@ -1,15 +1,13 @@
 // import React from 'react'
 
 import PropTypes from "prop-types";
+import { useContext } from "react";
+import { MovieContext } from "./MovieContext";
 
-const MovieCard = ({
-  movie,
-  posterPath,
-  name,
-  addToWatchlist,
-  removeFromWatchlist,
-  watchlist,
-}) => {
+const MovieCard = ({ movie, posterPath, name }) => {
+  const { watchlist, addToWatchlist, removeFromWatchlist } =
+    useContext(MovieContext);
+
   const doesMovieInWatchlist = (movie) => {
     return watchlist.some((m) => m.id === movie.id);
   };
@@ -43,9 +41,6 @@ MovieCard.propTypes = {
   movie: PropTypes.object.isRequired,
   posterPath: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  addToWatchlist: PropTypes.func.isRequired,
-  removeFromWatchlist: PropTypes.func.isRequired,
-  watchlist: PropTypes.array.isRequired,
 };
 
 export default MovieCard;
