@@ -1,10 +1,7 @@
 import "./App.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { MovieContext } from "./components/MovieContext";
 
 import Navbar from "./components/Navbar";
 import Movies from "./components/Movies";
@@ -13,7 +10,6 @@ import Banner from "./components/Banner";
 
 function App() {
   let [watchlist, setWatchlist] = useState([]);
-  console.log(watchlist);
   let addToWatchlist = (movie) => {
     let newWatchlist = [...watchlist, movie];
     localStorage.setItem("moviesApp", JSON.stringify(newWatchlist));
@@ -34,48 +30,40 @@ function App() {
   }, []);
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <>
-                <Banner />
-                <Movies
-                  addToWatchlist={addToWatchlist}
-                  removeFromWatchlist={removeFromWatchlist}
-                  watchlist={watchlist}
-                />
-              </>
-            }
-          />
-          <Route
-            path="/movies"
-            element={
-              <>
-                <Banner />
-                <Movies
-                  addToWatchlist={addToWatchlist}
-                  removeFromWatchlist={removeFromWatchlist}
-                  watchlist={watchlist}
-                />
-              </>
-            }
-          />
-          <Route
-            path="/watchlist"
-            element={
-              <Watchlist
-                watchlist={watchlist}
-                setWatchlist={setWatchlist}
-                removeFromWatchlist={removeFromWatchlist}
-              />
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+      <MovieContext.Provider
+        value={{
+          watchlist,
+          setWatchlist,
+          addToWatchlist,
+          removeFromWatchlist,
+        }}
+      >
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <>
+                  <Banner />
+                  <Movies />
+                </>
+              }
+            />
+            <Route
+              path="/movies"
+              element={
+                <>
+                  <Banner />
+                  <Movies />
+                </>
+              }
+            />
+            <Route path="/watchlist" element={<Watchlist />} />
+          </Routes>
+        </BrowserRouter>
+      </MovieContext.Provider>
     </>
   );
 }
